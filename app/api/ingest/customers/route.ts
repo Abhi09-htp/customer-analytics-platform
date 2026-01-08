@@ -16,6 +16,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // 👇 THIS LINE MUST EXIST
     const text = await file.text();
 
     const records = parse(text, {
