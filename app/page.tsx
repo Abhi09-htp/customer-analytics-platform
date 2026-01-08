@@ -19,7 +19,11 @@ export default function Home() {
         return res.json();
       })
       .then(setMetrics)
-      .catch(() => setError("Unable to load metrics"));
+.catch(() =>
+  setError(
+    "Metrics API requires local PostgreSQL. Please run the project locally."
+  )
+);
   }, []);
 
   return (
