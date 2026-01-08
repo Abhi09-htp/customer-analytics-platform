@@ -10,20 +10,29 @@ type Metrics = {
 
 export default function Home() {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/metrics/summary")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to load metrics");
-        return res.json();
-      })
-      .then(setMetrics)
-.catch(() =>
-  setError(
-    "Metrics API requires local PostgreSQL. Please run the project locally."
-  )
-);
+    const fetchMetrics = async () => {
+      try {
+        const res = await fetch("/api/metrics/summary");
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch metrics");
+        }
+
+        const data = await res.json();
+        setMetrics(data);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Unable to load metrics at the moment."
+        );
+      }
+    };
+
+    fetchMetrics();
   }, []);
 
   return (
