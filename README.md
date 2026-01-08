@@ -100,6 +100,13 @@ Deployment Notes
 The application is deployed on Vercel.
 
 The PostgreSQL database runs locally, so data ingestion and metrics APIs require local execution. This limitation is documented intentionally to reflect real-world deployment constraints.
+Live Demo:
+https://customer-analytics-platform-brown.vercel.app
+
+Note: The application uses a local PostgreSQL database.
+The deployed version demonstrates frontend rendering and API structure,
+while full functionality is available when running locally.
+
 
 Key Learnings
 
