@@ -16,11 +16,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const records = parse(text, {
-  columns: true,
-  skip_empty_lines: true,
-}) as { name: string; email: string }[];
+    const text = await file.text();
 
+    const records = parse(text, {
+      columns: true,
+      skip_empty_lines: true,
+    }) as { name: string; email: string }[];
 
     for (const record of records) {
       const name = record.name;
@@ -46,4 +47,3 @@ export async function POST(request: Request) {
     );
   }
 }
-x``

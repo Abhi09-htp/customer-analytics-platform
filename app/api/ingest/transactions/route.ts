@@ -19,20 +19,20 @@ export async function POST(request: Request) {
     const text = await file.text();
 
     const records = parse(text, {
-  columns: true,
-  skip_empty_lines: true,
-}) as {
-  customer_email: string;
-  amount: string;
-  transaction_date: string;
-}[];
+      columns: true,
+      skip_empty_lines: true,
+    }) as {
+      customer_email: string;
+      amount: string;
+      transaction_date: string;
+    }[];
 
     for (const record of records) {
       const customerEmail = record.customer_email;
       const amount = record.amount;
-      const date = record.transaction_date;
+      const transactionDate = record.transaction_date;
 
-      if (!customerEmail || !amount || !date) continue;
+      if (!customerEmail || !amount || !transactionDate) continue;
 
       const customerResult = await pool.query(
         "SELECT id FROM customers WHERE email = $1",
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       await pool.query(
         `INSERT INTO transactions (customer_id, amount, transaction_date)
          VALUES ($1, $2, $3)`,
-        [customerId, amount, date]
+        [customerId, amount, transactionDate]
       );
     }
 
