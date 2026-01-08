@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Customer Analytics Platform
 
-## Getting Started
+## Overview
+The Customer Analytics Platform is a backend-driven data system that ingests raw customer and transaction data, stores it in a relational database, and exposes business metrics via APIs and a minimal frontend.
 
-First, run the development server:
+The project demonstrates real-world backend and data engineering concepts such as data ingestion, relational modeling, SQL-based analytics, and API-driven reporting.
 
-```bash
+---
+
+## Tech Stack
+- **Frontend:** Next.js (App Router), React, TypeScript
+- **Backend:** Next.js API Routes (Node.js runtime)
+- **Database:** PostgreSQL
+- **Data Processing:** SQL
+- **Deployment:** Vercel (frontend + APIs)
+- **Version Control:** GitHub
+
+---
+
+## System Architecture
+1. CSV files are uploaded via API endpoints
+2. Backend parses and validates data
+3. Data is stored in PostgreSQL using relational tables
+4. SQL queries compute business metrics
+5. Metrics are exposed through REST APIs
+6. Frontend fetches and displays aggregated results
+
+---
+
+## Database Schema
+### customers
+- id (PK)
+- name
+- email
+- created_at
+
+### transactions
+- id (PK)
+- customer_id (FK → customers.id)
+- amount
+- transaction_date
+
+---
+
+## API Endpoints
+
+### Ingest Customers
+Uploads a CSV file with customer data.
+
+**CSV Format:**
+```csv
+name,email
+John Doe,john@example.com
+
+Ingest Transactions
+POST /api/ingest/transactions
+Uploads a CSV file with transaction data linked to customers.
+
+CSV Format:
+customer_email,amount,transaction_date
+john@example.com,100.50,2025-01-01
+
+Metrics Summary
+GET /api/metrics/summary
+
+Response:
+{
+  "totalCustomers": 3,
+  "totalRevenue": 425.75,
+  "totalTransactions": 3
+}
+
+Frontend
+
+The frontend provides a minimal dashboard that displays:
+
+Total custom
+ers
+
+Total revenue
+
+Total transactions
+
+The UI is intentionally simple to keep focus on backend logic and data flow.
+
+Local Setup
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a .env.local file:
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=customer_analytics
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deployment Notes
 
-## Learn More
+The application is deployed on Vercel.
 
-To learn more about Next.js, take a look at the following resources:
+The PostgreSQL database runs locally, so data ingestion and metrics APIs require local execution. This limitation is documented intentionally to reflect real-world deployment constraints.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Key Learnings
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Designing ingestion pipelines for raw data
 
-## Deploy on Vercel
+Relational data modeling with PostgreSQL
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Writing SQL-based business metrics
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+API-driven analytics systems
+
+End-to-end data flow from ingestion to visualization
+
+Author
+Abhishek Mane
+FullStack Developer
