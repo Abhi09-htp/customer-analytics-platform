@@ -19,9 +19,13 @@ export async function POST(request: Request) {
     const text = await file.text();
 
     const records = parse(text, {
-      columns: true,
-      skip_empty_lines: true,
-    });
+  columns: true,
+  skip_empty_lines: true,
+}) as {
+  customer_email: string;
+  amount: string;
+  transaction_date: string;
+}[];
 
     for (const record of records) {
       const customerEmail = record.customer_email;
