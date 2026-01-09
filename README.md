@@ -67,9 +67,6 @@ Uploads a CSV file containing customer data.
 
 POST /api/ingest/customers
 
-**CSV Format**
-
-```csv
 name,email
 John Doe,john@example.com
 Jane Smith,jane@example.com
@@ -81,8 +78,6 @@ Uploads a CSV file containing transaction data linked to customers.
 Endpoint
 
 POST /api/ingest/transactions
-
-CSV Format
 
 customer_email,amount,transaction_date
 john@example.com,100.50,2025-01-01
